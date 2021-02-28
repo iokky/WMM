@@ -193,7 +193,7 @@ class ReportSerialize(View):
                 'y': order['product_cost'],
                 'count': order['product_count']
             })
-        print(data['products'])
+        # print(data['products'])
 
         return JsonResponse(data, safe=False)
 
