@@ -1,0 +1,26 @@
+{% extends 'order/base.html' %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div class="category_form">
+    <div class="content_form">
+        {% if 'category_update' in request.path  %}
+        <h1> Изменение категории</h1>
+        {% else %}
+        <h1>Добавление категории</h1>
+        {% endif %}
+
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form|crispy}}
+        {% if 'category_update' in request.path  %}
+            <button type="submit"  class="btn btn-primary form_btn">Изменить</button>
+        {% else %}
+            <button type="submit"  class="btn btn-primary form_btn">Добавить</button>
+        {% endif %}
+        </form>
+
+    </div>
+</div>
+{% endblock content %}

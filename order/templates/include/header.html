@@ -1,0 +1,23 @@
+{% load static %}
+<header class="navbar navbar-dark bg-dark">
+    <nav class="nav">
+        <a href="{% url 'main' %}" class="nav-link">На главную</a>
+        <div class="nav_list">
+            <ul>
+                <li>
+                    <a href="{% url 'api' %}" class="nav-link">API</a>
+                </li>
+                <li>
+                    <a href="/admin" class="nav-link">Admin</a>
+                </li>
+                <li>
+                    <a href="{% url 'category' %}" class="nav-link">Категории</a>
+                </li>
+                <li>
+                    <a href="{% url 'product' %}" class="nav-link">Продукты</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+</header>
+

@@ -1,0 +1,34 @@
+{% extends 'order/base.html' %}
+{% load static %}
+{% block title %} Продукты {% endblock title %}
+
+{% block content %}
+    <div class="content">
+        <h2 class="main_heading">Продукты</h2>
+        <a href="{% url 'add_product' %}" class="btn btn-primary btn-block add_cat">+ Продукт</a>
+
+        <hr class="line">
+        {% for product in product_list %}
+        <div class="card_body">
+            <div class="product_card">
+                <div>
+                    <img src="{{ product.image.url }}" alt="" class="product_ico">
+                </div>
+                <h4 class="news_title product_title">
+                    {{ product.name }}
+                </h4>
+
+                <div class="edit">
+                    <a href="{% url 'product_update' product.id %}" class="btn btn-primary btn-block product_btn change_btn">Изменить</a>
+                </div>
+            </div>
+            <div class="info">
+                {{ product.description }}
+            </div>
+        </div>
+        <hr class="line">
+        {% endfor %}
+
+    </div>
+{% endblock content %}
+

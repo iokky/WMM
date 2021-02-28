@@ -1,0 +1,25 @@
+{% load static %}
+    <div class="side_bar_headding  navbar-dark bg-dark" id="side_bar_headding">
+        Title
+    </div>
+    <ul class="side_bar_list ">
+        <li class="side_bar_item">
+        {% if messages %}
+            {% for message in messages %}
+                <div class="success" style="color: green;">
+                    {{ message }} {{ category.name }}
+                </div>
+            {% endfor %}
+        {% endif %}
+        </li>
+        <li class="side_bar_item">
+            <a class="side_bar_link" href="{% url 'category' %}">Категории</a>
+        </li>
+        <li class="side_bar_item">
+            <a class="side_bar_link" href="{% url 'product' %}">Продукты</a>
+        </li>
+    </ul>
+{% block scripts %}
+<script type="text/javascript" src="{% static 'assets/scripts/interface.js' %}"></script>
+{% endblock scripts %}
+
