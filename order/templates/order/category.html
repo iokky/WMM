@@ -48,7 +48,11 @@
                     <hr>
                 </div>
             {% endfor %}
-            <a href="{% url 'add_product' %}" class="btn btn-primary btn-block product_btn">+ Продукт</a>
+                <form action="{% url 'add_product' %}" method="get">
+                    <input type="text" name="category" value="{{ category.id }}" style="visibility:hidden; width:10px;">
+                    <button type="submit"  class="btn btn-primary btn-block product_btn">+ Продукт</button>
+                </form>
+
             </div>
         </div>
     </div>

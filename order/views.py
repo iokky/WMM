@@ -75,9 +75,18 @@ class ProductFormView(CreateView):
     model = Product
     form_class = ProductForm
 
+    def get_form(self):
+        form = super(ProductFormView, self).get_form()
+        initial_base = self.get_initial()
+        form.initial = initial_base
+        form.fields['category'].initial = self.request.GET['category']
+        return form
+
     def post(self, request):
         if request.method == 'POST':
+            print(request.GET)
             form = ProductForm(request.POST, request.FILES)
+
             if form.is_valid():
                 FileUploadHandler(request.FILES['image'])
                 form.save()
@@ -92,52 +101,6 @@ class ProductUpdateView(UpdateView):
         'description',
         'image'
     ]
-
-# class ReportView(View):
-#
-#     def get(self, request):
-#         all_orders = Order.objects.all()\
-#             .annotate(order_date=TruncDate('date'))\
-#             .values('order_date')\
-#             .annotate(cost=Sum('price'))\
-#             .order_by('date')
-#
-#         date_list = list()
-#         all_orders_dict = dict()
-#         # print(all_orders)
-#         for order in all_orders:
-#             if not order['order_date'] in date_list:
-#                 date_list.append(order['order_date'])
-#
-#             if order['order_date'] in all_orders_dict:
-#                 all_orders_dict[order['order_date']] += order['cost']
-#             else:
-#                 all_orders_dict[order['order_date']] = order['cost']
-#         print(all_orders_dict)
-#
-#         order_data = list()
-#         for date in date_list:
-#            if date in all_orders_dict:
-#                 order_data.append(all_orders_dict[order['order_date']])
-#            else:
-#                order_data.append(0)
-#
-#         data = {'orders': {}}
-#         data['orders']['date_list'] = date_list
-#         data['orders']['series'] = [
-#             {'name': 'Покупки', 'all_orders_dict': all_orders_dict}
-#         ]
-#
-#         def date_serializer(obj):
-#             if isinstance(obj, (DT.datetime, DT.date)):
-#                 serial = obj.isoformat()
-#                 return serial
-#             if isinstance(obj, Decimal):
-#                 return float(obj)
-#
-#         data = Js.dumps(data, default=date_serializer)
-#
-#         return render(request, 'test.html', locals())
 
 
 class MainView(ListView):
@@ -155,7 +118,6 @@ class ReportSerialize(View):
         if 'start_date' and 'end_date' in request.GET:
             start_date = request.GET['start_date']
             end_date = request.GET['end_date']
-            print(start_date, end_date)
         else:
             start_date = '2021-02-01'
             end_date = '2021-02-28'
