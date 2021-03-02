@@ -366,14 +366,14 @@
 .open {
     cursor: pointer;
     visibility: hidden;
-    position: absolute;
-    top: 30%;
-    left: 28%;
+    margin-top: 15%;
     width: 70px;
+    height: 40px;
     transition: 528ms;
 }
 
 /* Order_page */
+
 
 .date_filter {
     margin-top: 60px;

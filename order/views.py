@@ -36,7 +36,6 @@ class CategoryView(ListView):
                 instance = form.save(commit=False)
                 instance.save()
                 messages.success(request, 'Продукт успешно добавлен')
-                print(self)
             return HttpResponseRedirect('/category')
 
 
@@ -79,7 +78,8 @@ class ProductFormView(CreateView):
         form = super(ProductFormView, self).get_form()
         initial_base = self.get_initial()
         form.initial = initial_base
-        form.fields['category'].initial = self.request.GET['category']
+        if 'category' in self.request.GET:
+            form.fields['category'].initial = self.request.GET['category']
         return form
 
     def post(self, request):
@@ -135,7 +135,6 @@ class ReportSerialize(View):
             .order_by('-product_cost')
 
         data = {'series': [], 'products': [], 'total_cost': 0}
-        product_data = {'series': [], 'total_cost': 0}
 
         for order in orders_list:
             data['total_cost'] += order['cost']
@@ -148,7 +147,6 @@ class ReportSerialize(View):
         # print(data['series'])
 
         for order in products_list:
-            product_data['total_cost'] += order['product_cost']
             data['products'].append({
                 'category': order['category__name'],
                 'name': order['product__name'],
